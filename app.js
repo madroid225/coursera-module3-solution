@@ -60,10 +60,11 @@
                 url: (ApiBasePath + "/menu_items.json")
             }).then(function (result) {
                 var foundItems = [];
+                var srcLower = searchTerm.toLowerCase();
                 //find items matching
                 for (var i = 0; i < result.data.menu_items.length; i++) {
                     var item = result.data.menu_items[i];
-                    if (item.name.indexOf(searchTerm) !== -1 || item.description.indexOf(searchTerm) !== -1) {
+                    if (item.name.toLowerCase().indexOf(srcLower) !== -1 || item.description.toLowerCase().indexOf(srcLower) !== -1) {
                         foundItems.push(item);
                     }
                 }
