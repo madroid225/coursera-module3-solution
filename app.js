@@ -6,7 +6,7 @@
     .service('MenuSearchService', MenuSearchService)
     .directive('foundItems', FoundItemsDirective)
 
-    .constant('ApiBasePath', "http://davids-restaurant.herokuapp.com");
+    .constant('ApiBasePath', "https://davids-restaurant.herokuapp.com");
 
     function FoundItemsDirective() {
         var ddo = {
@@ -36,9 +36,12 @@
         controller.searchItem = '';
         controller.items = [];
 
+        controller.nothingFound = false;
+
         controller.findItems = function () {
             service.getMatchedMenuItems(controller.searchItem).then(function (foundItems) {
                 controller.items = foundItems;
+                controller.nothingFound = (foundItems == 0);
             });
         }
 
@@ -61,11 +64,14 @@
             }).then(function (result) {
                 var foundItems = [];
                 var srcLower = searchTerm.toLowerCase();
-                //find items matching
-                for (var i = 0; i < result.data.menu_items.length; i++) {
-                    var item = result.data.menu_items[i];
-                    if (item.name.toLowerCase().indexOf(srcLower) !== -1 || item.description.toLowerCase().indexOf(srcLower) !== -1) {
-                        foundItems.push(item);
+
+                if (srcLower.length > 0) {
+                    //find items matching
+                    for (var i = 0; i < result.data.menu_items.length; i++) {
+                        var item = result.data.menu_items[i];
+                        if (item.name.toLowerCase().indexOf(srcLower) !== -1 || item.description.toLowerCase().indexOf(srcLower) !== -1) {
+                            foundItems.push(item);
+                        }
                     }
                 }
 

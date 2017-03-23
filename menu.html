@@ -3,9 +3,11 @@
     <h2>Menu</h2>
     <ol>
         <li ng-repeat="item in list.items">
-            <h3>{{item.name}}</h3>
-            {{item.description}}
-            <button ng-click="list.onRemove({index : $index});">Don't want this one!</button>
+            <div>
+                <h3>{{item.name}} - ({{item.short_name}})</h3> 
+                {{item.description}}
+            </div>
+            <button class="btn" ng-click="list.onRemove({index : $index});">Don't want this one!</button>
       </li>
     </ol>
 </div>
